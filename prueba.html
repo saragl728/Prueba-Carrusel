@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba carrusel</title>
+    <link href="estilo.css" rel="stylesheet">
+</head>
+
+<body onload="interv = setInterval(rotaEnOrder, 4000)">
+    <h1 id="tit"></h1>
+    <button id="para" onclick="para()"></button>
+    <button id="sigue" onclick="setInterval(rotaEnOrder, 4000)"></button>
+    <br>
+    <img id="imagen" alt="Fondo de pantalla incluido en Windows 7" ondblclick="carrusel()">
+    <br>
+    <!--<p id="mas"></p>-->
+    <!--en esta línea decimos si está pausado o rotando-->
+    <p id="estado"></p>
+    <script>
+        //tienen el mismo formato de nombre, así que usaré un bucle
+        //si no tuvieran el mismo formato de nombre, tendría que poner los nombres a mano
+        var imagenes = [];
+        for (let i = 0; i <= 30; i++) {
+            imagenes.push(`Pngs/img${i}.jpg`)
+        }
+
+        var indx = -1;   //variable para rotar en order, lo pongo a -1 para que cuando empiece a rotar en orden no se salte la 1ª imagen
+
+        var rotando = false  //usaremos esto para la rotación
+
+        switch (navigator.language) {
+            case "es-ES":
+            case "es-AR":
+                document.getElementById("tit").innerHTML = "Imagen cambiante";
+                document.getElementById("para").textContent = "Para";
+                document.getElementById("para").title = "Para";
+                document.getElementById("sigue").textContent = "Continúa";
+                document.getElementById("sigue").title = "Continúa";
+                //document.getElementById("mas").innerHTML = "Haz doble click en la imagen para detener o continuar el pase de imágenes";
+                break;
+            case "en-EN":
+            case "en-US":
+                document.getElementById("tit").innerHTML = "Changing image";
+                document.getElementById("para").textContent = "Stop";
+                document.getElementById("para").title = "Stop";
+                document.getElementById("sigue").textContent = "Continue";
+                document.getElementById("sigue").title = "Continue";
+                //document.getElementById("mas").innerHTML = "Double click the imagen to stop or continue images slide";
+                break;
+        }
+
+        function para() {
+            clearInterval(interv)
+            switch (navigator.language) {
+                case "es-ES":
+                case "es-AR":
+                    document.getElementById("estado").textContent = "Pausado";
+                    break;
+                case "en-EN":
+                case "en-US":
+                    document.getElementById("estado").textContent = "Paused";
+                    break;
+            }
+            if (rotando) rotando = false
+        }
+
+        function mensajeRotando() {
+            switch (navigator.language) {
+                case "es-ES":
+                case "es-AR":
+                    document.getElementById("estado").textContent = "Rotando...";
+                    break;
+                case "en-EN":
+                case "en-US":
+                    document.getElementById("estado").textContent = "Rotating...";
+                    break;
+            }
+        }
+
+        function rotaEnOrder() {
+            if (indx == imagenes.length - 1) indx = 0;
+            else indx++;
+            document.getElementById("imagen").setAttribute("src", imagenes[indx])    //le damos la fuente a la imagen
+
+            mensajeRotando()
+
+            if (!rotando) rotando = true
+        }
+
+        function rotaAlAzar() {
+            let ind = Math.floor(Math.random() * imagenes.length);  //esta variable es para obtener el índice del array
+
+            document.getElementById("imagen").setAttribute("src", imagenes[ind])    //le damos la fuente a la imagen
+
+            mensajeRotando()
+
+            if (!rotando) rotando = true
+        }
+    </script>
+</body>
+
+</html>
