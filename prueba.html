@@ -13,7 +13,7 @@
     <button id="para" onclick="para()"></button>
     <button id="sigue" onclick="setInterval(rotaEnOrder, 4000)"></button>
     <br>
-    <img id="imagen" alt="Fondo de pantalla incluido en Windows 7" ondblclick="clicImagen()">
+    <img id="imagen" ondblclick="clicImagen()">
     <br>
     <p id="mas" class="info"></p>
     <!--en esta línea decimos si está pausado o rotando-->
@@ -33,6 +33,7 @@
         switch (navigator.language) {
             case "es-ES":
             case "es-AR":
+                document.getElementById("imagen").setAttribute("alt", "Fondo de pantalla incluido en Windows 7")
                 document.getElementById("tit").innerHTML = "Imagen cambiante";
                 document.getElementById("para").title = "Para";
                 document.getElementById("sigue").title = "Continúa";
@@ -40,6 +41,8 @@
                 break;
             case "en-EN":
             case "en-US":
+            default:
+            document.getElementById("imagen").setAttribute("alt", "Wallpaper included in Windows 7")
                 document.getElementById("tit").innerHTML = "Changing image";
                 document.getElementById("para").title = "Stop";
                 document.getElementById("sigue").title = "Continue";
@@ -63,6 +66,7 @@
                     break;
                 case "en-EN":
                 case "en-US":
+                default:
                     document.getElementById("estado").textContent = "Paused";
                     break;
             }
@@ -77,6 +81,7 @@
                 case "es-AR":
                     document.getElementById("estado").textContent = "Rotando...";
                     break;
+                default:
                 case "en-EN":
                 case "en-US":
                     document.getElementById("estado").textContent = "Rotating...";
