@@ -13,15 +13,36 @@ img {
   height: 50%;
 }
 
-p {
+#para {
+  background-image: url("Svgs/icono_pausa.svg");
+}
+
+#sigue {
+  background-image: url("Svgs/icono_reproducir.svg");
+}
+
+.activo {
   background-image: linear-gradient(#fff892, #ffc671, #fff892);
   padding: 6px;
   border-radius: 10px;
   border: #eea ridge 5px;
 }
 
+.inactivo {
+  background-color: #ddd;
+  padding: 6px;
+  border-radius: 10px;
+  border: #4e4e4c groove 5px;
+}
+
+.info {
+  background-image: radial-gradient(#add, #afd);
+  padding: 3px;
+  border-radius: 5px;
+}
+
 button {
-  padding: 5px;
+  padding: 15px;
   font-weight: bold;
   background-color: #ebd9a0;
   border-radius: 5px;
@@ -29,7 +50,7 @@ button {
 }
 
 button:hover {
-  padding: 5px;
+  padding: 15px;
   font-weight: bold;
   background-color: #f7edcf;
   border-radius: 5px;

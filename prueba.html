@@ -13,9 +13,9 @@
     <button id="para" onclick="para()"></button>
     <button id="sigue" onclick="setInterval(rotaEnOrder, 4000)"></button>
     <br>
-    <img id="imagen" alt="Fondo de pantalla incluido en Windows 7" ondblclick="carrusel()">
+    <img id="imagen" alt="Fondo de pantalla incluido en Windows 7" ondblclick="clicImagen()">
     <br>
-    <!--<p id="mas"></p>-->
+    <p id="mas" class="info"></p>
     <!--en esta línea decimos si está pausado o rotando-->
     <p id="estado"></p>
     <script>
@@ -34,21 +34,24 @@
             case "es-ES":
             case "es-AR":
                 document.getElementById("tit").innerHTML = "Imagen cambiante";
-                document.getElementById("para").textContent = "Para";
                 document.getElementById("para").title = "Para";
-                document.getElementById("sigue").textContent = "Continúa";
                 document.getElementById("sigue").title = "Continúa";
-                //document.getElementById("mas").innerHTML = "Haz doble click en la imagen para detener o continuar el pase de imágenes";
+                document.getElementById("mas").innerHTML = "Haz doble click en la imagen para detener o continuar el pase de imágenes";
                 break;
             case "en-EN":
             case "en-US":
                 document.getElementById("tit").innerHTML = "Changing image";
-                document.getElementById("para").textContent = "Stop";
                 document.getElementById("para").title = "Stop";
-                document.getElementById("sigue").textContent = "Continue";
                 document.getElementById("sigue").title = "Continue";
-                //document.getElementById("mas").innerHTML = "Double click the imagen to stop or continue images slide";
+                document.getElementById("mas").innerHTML = "Double click the imagen to stop or continue images slide";
                 break;
+        }
+
+        function clicImagen() {
+            if (document.getElementById("estado").className == "activo") {
+                para()
+            }
+            else rotaEnOrder()  //si quiero que sea aleatorio, pongo rotaAlAzar
         }
 
         function para() {
@@ -64,6 +67,8 @@
                     break;
             }
             if (rotando) rotando = false
+            //se cambia el estilo para que quede claro que no está activo
+            if (document.getElementById("estado").className != "inactivo") document.getElementById("estado").className = "inactivo"
         }
 
         function mensajeRotando() {
@@ -87,6 +92,7 @@
             mensajeRotando()
 
             if (!rotando) rotando = true
+            if (document.getElementById("estado").className != "activo") document.getElementById("estado").className = "activo"
         }
 
         function rotaAlAzar() {
@@ -97,6 +103,8 @@
             mensajeRotando()
 
             if (!rotando) rotando = true
+            //se cambia el estilo para que quede claro que está activo
+            if (document.getElementById("estado").className != "activo") document.getElementById("estado").className = "activo"
         }
     </script>
 </body>
