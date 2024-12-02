@@ -8,10 +8,10 @@
     <link href="estilo.css" rel="stylesheet">
 </head>
 
-<body onload="interv = setInterval(rotaEnOrder, 4000)">
+<body onload="interv = setInterval(rotaEnOrder, intervalo * 1000)">
     <h1 id="tit"></h1>
     <button id="para" onclick="para()"></button>
-    <button id="sigue" onclick="setInterval(rotaEnOrder, 4000)"></button>
+    <button id="sigue" onclick="setInterval(rotaEnOrder, intervalo * 1000)"></button>
     <br>
     <img id="imagen" ondblclick="clicImagen()">
     <br>
@@ -19,20 +19,23 @@
     <!--en esta línea decimos si está pausado o rotando-->
     <p id="estado"></p>
     <script>
+        const intervalo = 3.2;  //constante que se usa para que cuando se quiera cambiar la frecuencia no haya que buscar en todas las ocurrencias, está en segundos
+
         //tienen el mismo formato de nombre, así que usaré un bucle
         //si no tuvieran el mismo formato de nombre, tendría que poner los nombres a mano
         var imagenes = [];
         for (let i = 0; i <= 30; i++) {
-            imagenes.push(`Pngs/img${i}.jpg`)
+            imagenes.push(`Pngs/img${i}.jpg`);
         }
 
         var indx = -1;   //variable para rotar en order, lo pongo a -1 para que cuando empiece a rotar en orden no se salte la 1ª imagen
 
-        var rotando = false  //usaremos esto para la rotación
+        var rotando = false;  //usaremos esto para la rotación
 
         switch (navigator.language) {
             case "es-ES":
             case "es-AR":
+            default:
                 document.getElementById("imagen").setAttribute("alt", "Fondo de pantalla incluido en Windows 7")
                 document.getElementById("tit").innerHTML = "Imagen cambiante";
                 document.getElementById("para").title = "Para";
@@ -41,8 +44,7 @@
                 break;
             case "en-EN":
             case "en-US":
-            default:
-            document.getElementById("imagen").setAttribute("alt", "Wallpaper included in Windows 7")
+                document.getElementById("imagen").setAttribute("alt", "Wallpaper included in Windows 7")
                 document.getElementById("tit").innerHTML = "Changing image";
                 document.getElementById("para").title = "Stop";
                 document.getElementById("sigue").title = "Continue";
@@ -52,9 +54,9 @@
 
         function clicImagen() {
             if (document.getElementById("estado").className == "activo") {
-                para()
+                para();
             }
-            else rotaEnOrder()  //si quiero que sea aleatorio, pongo rotaAlAzar
+            else interv = setInterval(rotaEnOrder, intervalo * 1000)  //si quiero que sea aleatorio, pongo rotaAlAzar
         }
 
         function para() {
@@ -62,26 +64,27 @@
             switch (navigator.language) {
                 case "es-ES":
                 case "es-AR":
+                default:
                     document.getElementById("estado").textContent = "Pausado";
                     break;
                 case "en-EN":
                 case "en-US":
-                default:
                     document.getElementById("estado").textContent = "Paused";
                     break;
             }
             if (rotando) rotando = false
             //se cambia el estilo para que quede claro que no está activo
             if (document.getElementById("estado").className != "inactivo") document.getElementById("estado").className = "inactivo"
+            document.getElementById("btnCambiante").className = "pau"
         }
 
         function mensajeRotando() {
             switch (navigator.language) {
                 case "es-ES":
                 case "es-AR":
+                default:
                     document.getElementById("estado").textContent = "Rotando...";
                     break;
-                default:
                 case "en-EN":
                 case "en-US":
                     document.getElementById("estado").textContent = "Rotating...";
@@ -89,10 +92,16 @@
             }
         }
 
+        function estableceImagen(fuente) {
+            document.getElementById("imagen").src = fuente;
+        }
+
         function rotaEnOrder() {
+            //si el índice es del último elemento, lo ponemos a 0 para volver al principio, en el caso contrario vamos al siguiente
             if (indx == imagenes.length - 1) indx = 0;
             else indx++;
-            document.getElementById("imagen").setAttribute("src", imagenes[indx])    //le damos la fuente a la imagen
+
+            estableceImagen(imagenes[indx]) //le damos la fuente a la imagen
 
             mensajeRotando()
 
@@ -103,7 +112,7 @@
         function rotaAlAzar() {
             let ind = Math.floor(Math.random() * imagenes.length);  //esta variable es para obtener el índice del array
 
-            document.getElementById("imagen").setAttribute("src", imagenes[ind])    //le damos la fuente a la imagen
+            estableceImagen(imagenes[ind])    //le damos la fuente a la imagen
 
             mensajeRotando()
 
