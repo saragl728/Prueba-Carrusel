@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prueba carrusel</title>
     <link href="estilo.css" rel="stylesheet" />
     <script src="escript.js" defer></script>
-  </head>
+</head>
 
-  <body onload="interv = setInterval(rotaEnOrder, intervalo * 1000)">
+<body onload="interv = setInterval(rotaEnOrder, intervalo * 1000)">
     <h1 id="tit"></h1>
     <button id="para" onclick="para()"></button>
-    <button
-      id="sigue"
-      onclick="setInterval(rotaEnOrder, intervalo * 1000)"
-    ></button>
+    <button id="sigue" onclick="setInterval(rotaEnOrder, intervalo * 1000)"></button>
     <br />
     <img id="imagen" ondblclick="clicImagen()" />
     <br />
@@ -22,76 +20,47 @@
     <!--en esta línea decimos si está pausado o rotando-->
     <p id="estado"></p>
     <script>
-      function clicImagen() {
-        if (document.getElementById("estado").className == "activo") {
-          para();
-        } else interv = setInterval(rotaEnOrder, intervalo * 1000); //si quiero que sea aleatorio, pongo rotaAlAzar
-      }
-
-      function para() {
-        clearInterval(interv);
-        switch (navigator.language) {
-          case "es-ES":
-          case "es-AR":
-          default:
-            document.getElementById("estado").textContent = "Pausado";
-            break;
-          case "en-EN":
-          case "en-US":
-            document.getElementById("estado").textContent = "Paused";
-            break;
+        function clicImagen() {
+            if (document.getElementById("estado").className == "activo") {
+                para();
+            } else interv = setInterval(rotaEnOrder, intervalo * 1000); //si quiero que sea aleatorio, pongo rotaAlAzar
         }
-        if (rotando) rotando = false;
-        //se cambia el estilo para que quede claro que no está activo
-        if (document.getElementById("estado").className != "inactivo")
-          document.getElementById("estado").className = "inactivo";
-        document.getElementById("btnCambiante").className = "pau";
-      }
 
-      function mensajeRotando() {
-        switch (navigator.language) {
-          case "es-ES":
-          case "es-AR":
-          default:
-            document.getElementById("estado").textContent = "Rotando...";
-            break;
-          case "en-EN":
-          case "en-US":
-            document.getElementById("estado").textContent = "Rotating...";
-            break;
+        function para() {
+            clearInterval(interv);
+            switch (navigator.language) {
+                case "es-ES":
+                case "es-AR":
+                default:
+                    document.getElementById("estado").textContent = "Pausado";
+                    break;
+                case "en-EN":
+                case "en-US":
+                    document.getElementById("estado").textContent = "Paused";
+                    break;
+            }
+            if (rotando) rotando = false;
+            //se cambia el estilo para que quede claro que no está activo
+            if (document.getElementById("estado").className != "inactivo")
+                document.getElementById("estado").className = "inactivo";
         }
-      }
 
-      function estableceImagen(fuente) {
-        document.getElementById("imagen").src = fuente;
-      }
 
-      function rotaEnOrder() {
-        //si el índice es del último elemento, lo ponemos a 0 para volver al principio, en el caso contrario vamos al siguiente
-        if (indx == imagenes.length - 1) indx = 0;
-        else indx++;
+        function rotaEnOrder() {
+            //si el índice es del último elemento, lo ponemos a 0 para volver al principio, en el caso contrario vamos al siguiente
+            if (indx == imagenes.length - 1) indx = 0;
+            else indx++;
 
-        estableceImagen(imagenes[indx]); //le damos la fuente a la imagen
+            estableceImagen(imagenes[indx]); //le damos la fuente a la imagen
 
-        mensajeRotando();
+            mensajeRotando();
 
-        if (!rotando) rotando = true;
-        if (document.getElementById("estado").className != "activo")
-          document.getElementById("estado").className = "activo";
-      }
+            if (!rotando) rotando = true;
+            if (document.getElementById("estado").className != "activo")
+                document.getElementById("estado").className = "activo";
+        }
 
-      function rotaAlAzar() {
-        let ind = Math.floor(Math.random() * imagenes.length); //esta variable es para obtener el índice del array
-
-        estableceImagen(imagenes[ind]); //le damos la fuente a la imagen
-
-        mensajeRotando();
-
-        if (!rotando) rotando = true;
-        //se cambia el estilo para que quede claro que está activo
-        if (document.getElementById("estado").className != "activo")
-          document.getElementById("estado").className = "activo";
-      }
     </script>
-  </body>
+</body>
+
 </html>
